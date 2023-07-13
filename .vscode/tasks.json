@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "clean",
+        "type": "shell",
+        "command": "npm run clean",
+        "args": []
+      },
+      {
+        "label": "docker-build",
+        "type": "shell",
+        "command": "docker build . -t service-app",
+        "args": []
+      },
+      {
+        "label": "docker-compose-up",
+        "type": "shell",
+        "command": "docker compose up -d",
+        "args": []
+      }
+    ]
+  }
