@@ -3,10 +3,14 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build",
-    "target": "ES2016",
+    "target": "ES6",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "sourceMap": true,
-    "strict": true
+    "strict": true, 
+    "lib": ["DOM"]
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "src/main.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "src/main.tsx"]
 }
