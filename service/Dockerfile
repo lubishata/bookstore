@@ -1,4 +1,5 @@
-FROM node:18-alpine
+FROM node:18-alpine as base
+FROM base as dev 
 
 RUN mkdir /app && chown node:node /app
 WORKDIR /app

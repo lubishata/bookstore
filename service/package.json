@@ -1,7 +1,7 @@
 {
-  "name": "service",
+  "name": "bookstore-service",
   "version": "1.0.0",
-  "description": "example microservice",
+  "description": "bookstore backend service",
   "main": "./build/src/main.js",
   "engines": {
     "node": ">=10"
@@ -25,11 +25,8 @@
     "url": "git+https://github.com/lubishata/bookstore.git"
   },
   "keywords": [
-    "chat",
-    "rmq",
     "messaging",
-    "database",
-    "sockets"
+    "database"
   ],
   "author": "the team",
   "license": "ISC",

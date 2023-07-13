@@ -1,8 +1,8 @@
 {
-  "name": "service",
+  "name": "bookstore-frontend",
   "version": "1.0.0",
-  "description": "example microservice",
-  "main": "./build/main.js",
+  "description": "bookstore frontend",
+  "main": "./build/src/main.js",
   "engines": {
     "node": ">=10"
   },
@@ -25,11 +25,8 @@
     "url": "git+https://github.com/lubishata/bookstore.git"
   },
   "keywords": [
-    "chat",
-    "rmq",
     "messaging",
-    "database",
-    "sockets"
+    "database"
   ],
   "author": "the team",
   "license": "ISC",

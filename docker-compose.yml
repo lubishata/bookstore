@@ -21,7 +21,7 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
   backend:
     build:
-      dockerfile: backend/Dockerfile
+      dockerfile: service/Dockerfile
       context: .
       target: dev
     volumes:
