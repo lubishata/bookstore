@@ -53,8 +53,8 @@ services:
       - backend
     restart: 'always'
     ports:
-      - 3000:3000
-      - 9229:9229
+      - 4000:3000
+      - 9230:9229
     env_file:
       - ./frontend/.env
     links:
