@@ -1,6 +1,0 @@
-{
-    "ignore": ["**/*.test.ts", "**/*.spec.ts", "node_modules"],
-    "watch": ["build/**/*"],
-    "exec": "node --inspect=0.0.0.0:9229 --require ts-node/register src/main.ts",
-    "ext": "js"
-  }
