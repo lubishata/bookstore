@@ -2,7 +2,7 @@
 
 To integrate *The Chronicles of Aetheria* into your bookstore application or showcase its features, follow these steps:
 
-1. Access the `mockup-books/chronicles-of-aetheria` directory within this repository.
+1. Access the `mockup-books/the-chronicles-of-aetheria` directory within this repository.
 
 2. Retrieve the book description from the `description.md` file to provide users with a glimpse into the thrilling and magical story of Alara's quest to save her kingdom.
 
