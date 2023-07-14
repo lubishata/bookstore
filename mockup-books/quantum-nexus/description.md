@@ -1,0 +1,1 @@
+A gripping science fiction thriller called 'Quantum Nexus.' by Michael Steele. The novel explores a future where humanity has unlocked the secrets of quantum technology, leading to a high-stakes battle for control over an interdimensional gateway. 
