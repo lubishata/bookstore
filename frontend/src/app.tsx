@@ -1,8 +1,11 @@
 import React from 'react';
+import Proba from './Header/header';
 
 function App() {
     return (
-        <>{'react setup from scratch without cra testing ts'}</>
+        <div>
+            <Proba message={"test"} />
+        </div>
     );
 }
 export default App;
