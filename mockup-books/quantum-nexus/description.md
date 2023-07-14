@@ -2,7 +2,7 @@
 
 **Author:** Michael Steele
 
-![Quantum Nexus Cover](books/quantum-nexus/QN.png)
+![Quantum Nexus Cover](mockup-books/quantum-nexus/QN.png)
 
 ## Description
 
@@ -20,11 +20,11 @@ Beyond its thrilling plot, the novel delves into profound themes that probe the 
 
 To integrate *Quantum Nexus* into your bookstore application or showcase its features, follow these steps:
 
-1. Access the `books/quantum-nexus` directory within this repository.
+1. Access the `mockup-books/quantum-nexus` directory within this repository.
 
-2. Retrieve the book description from the `description.txt` file to provide users with a captivating summary of the novel's plot, themes, and characters.
+2. Retrieve the book description from the `description.md` file to provide users with a captivating summary of the novel's plot, themes, and characters.
 
-3. Display the book cover image (`cover.jpg`) to give readers a visually striking representation of *Quantum Nexus*.
+3. Display the book cover image (`QN.png`) to give readers a visually striking representation of *Quantum Nexus*.
 
 4. Customize the integration based on your application's requirements, such as incorporating book search, filtering, and displaying detailed book information.
 
