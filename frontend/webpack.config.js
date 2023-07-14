@@ -13,10 +13,12 @@ module.exports = {
         static: './build',
         hot: true,
         client: false,
+        historyApiFallback: true,
     },
     output: {
         path: path.join(__dirname, '/build'),
-        filename: '[name].js'
+        filename: '[name].js',
+        publicPath: '/',
     },
     module: {
         rules: [
@@ -29,6 +31,14 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                loader: 'file-loader',
             },
         ]
     },

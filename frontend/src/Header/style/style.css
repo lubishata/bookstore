@@ -1,0 +1,23 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 110px;
+    background-color: coral;
+}
+
+.header_logo {
+    width: 260px;
+    height: 100%;
+    float: left;
+}
+
+.header_logo-icon {
+    display: block;
+    width: 225px;
+    height: 49px;
+    background-size: 100%;
+    margin: 35px auto 0;
+    /* background-image: url(/assets/images/oblak-logo-white.svg?_512b72c47609); */
+}

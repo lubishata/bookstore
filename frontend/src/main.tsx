@@ -1,20 +1,14 @@
-import * as React from 'react';
-import ReactDOM from 'react-dom';
-import App from './app';
-const domNode = document.getElementById('root')!;
-const render = () => {
-    ReactDOM.render(
-        <React.StrictMode>
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'
+import App from './App';
+
+const rootElement = document.getElementById('root')!;
+
+createRoot(rootElement).render(
+    <React.StrictMode>
+        <BrowserRouter>
             <App />
-        </React.StrictMode>,
-        domNode
-    );
-};
-
-declare const module: any; // Add this line to declare the `module` variable
-
-if (module.hot) {
-    module.hot.accept('./app', render);
-}
-
-render();
+        </BrowserRouter>
+    </React.StrictMode>
+);

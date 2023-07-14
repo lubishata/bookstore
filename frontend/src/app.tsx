@@ -1,10 +1,11 @@
-import React from 'react';
-import Proba from './Header/header';
+import Header from './Header/Header';
+import AppRouter from './AppRouter';
 
 function App() {
     return (
         <div>
-            <Proba message={"test"} />
+            <Header message={"aaaa"} />
+            <AppRouter />
         </div>
     );
 }
