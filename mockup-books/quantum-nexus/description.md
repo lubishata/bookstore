@@ -2,7 +2,7 @@
 
 **Author:** Michael Steele
 
-![Quantum Nexus Cover](books/quantum-nexus/cover.jpg)
+![Quantum Nexus Cover](books/quantum-nexus/QN.png)
 
 ## Description
 
