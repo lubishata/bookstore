@@ -25,7 +25,7 @@ services:
       context: .
       target: dev
     volumes:
-      - ./service/src:/app/src
+      - ./service:/app
       - ./logs:/home/node/.npm/_logs/
     depends_on:
       - db
