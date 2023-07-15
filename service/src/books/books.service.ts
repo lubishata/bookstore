@@ -21,16 +21,19 @@ export class BooksService {
   }
 
   findOne(id: number) {
-    return this.bookRepository.findOneBy({ id });
+    return this.bookRepository.findOneByOrFail({ id });
   }
 
   async update(id: number, updateBookDto: UpdateBookDto) {
-    await this.bookRepository.update(id, updateBookDto);
-    return this.bookRepository.findOneBy({ id });
+    const book = await this.findOne(id);
+    return this.bookRepository.save({
+      ...book,
+      ...updateBookDto,
+    });
   }
 
   async remove(id: number) {
-    await this.bookRepository.delete(id);
-    return id;
+    const book = await this.findOne(id);
+    return this.bookRepository.remove(book);
   }
 }
