@@ -14,13 +14,13 @@ export class AuthService {
         if (user?.password !== pass){
             throw new UnauthorizedException();
         }
-        const token_data = {
+        const tokenData = {
             id: user.id,
             email: user.email, 
             role: user.role
             };
         return {
-            access_token: await this.jstService.signAsync(token_data),    
+            access_token: await this.jstService.signAsync(tokenData),    
         }
 
     }
