@@ -31,5 +31,6 @@ export class BooksService {
 
   async remove(id: number) {
     await this.bookRepository.delete(id);
+    return id;
   }
 }
