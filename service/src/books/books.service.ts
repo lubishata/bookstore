@@ -11,20 +11,20 @@ export class BooksService {
     @InjectRepository(Book) private bookRepository: Repository<Book>,
   ) {}
 
-  create(createBookDto: CreateBookDto) {
+  create(createBookDto: CreateBookDto):Promise<Book> {
     const book = this.bookRepository.create(createBookDto);
     return this.bookRepository.save(book);
   }
 
-  findAll() {
+  findAll():Promise<Book[]> {
     return this.bookRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: number):Promise<Book> {
     return this.bookRepository.findOneByOrFail({ id });
   }
 
-  async update(id: number, updateBookDto: UpdateBookDto) {
+  async update(id: number, updateBookDto: UpdateBookDto):Promise<Book> {
     const book = await this.findOne(id);
     return this.bookRepository.save({
       ...book,
@@ -32,7 +32,7 @@ export class BooksService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: number):Promise<Book> {
     const book = await this.findOne(id);
     return this.bookRepository.remove(book);
   }
