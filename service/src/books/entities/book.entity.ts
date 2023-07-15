@@ -14,7 +14,7 @@ export class Book {
   @Column()
   isbn: string;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 5, scale: 2 })
   price: number;
 
   @Column()
