@@ -6,10 +6,10 @@ import { Book } from './entities/book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { Filter } from './filter';
 
-const filters = [
-  new Filter('title', 'title'),
-  new Filter('author', 'author'),
-  new Filter('isbn', 'isbn'),
+const filters: Filter[] = [
+  { property: 'title', value: 'title' },
+  { property: 'author', value: 'author' },
+  { property: 'isbn', value: 'isbn' },
 ];
 
 const books = [

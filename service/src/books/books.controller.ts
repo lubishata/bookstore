@@ -27,10 +27,10 @@ export class BooksController {
 
   @Get()
   findAll(@Query() query: PaginationParamsDto) {
-    const filters = [
-      new Filter('title', query.title),
-      new Filter('author', query.author),
-      new Filter('isbn', query.isbn),
+    const filters: Filter[] = [
+      { property: 'title', value: query.title },
+      { property: 'author', value: query.author },
+      { property: 'isbn', value: query.isbn },
     ];
 
     return this.booksService.findAll(
