@@ -26,18 +26,29 @@ export class BooksController {
   }
 
   @Get()
-  findAll(@Query() query: PaginationParamsDto) {
+  async findAll(@Query() query: PaginationParamsDto) {
     const filters: Filter[] = [
       { property: 'title', value: query.title },
       { property: 'author', value: query.author },
       { property: 'isbn', value: query.isbn },
     ];
 
-    return this.booksService.findAll(
+    const { data, total } = await this.booksService.findAll(
       filters,
       query.limit,
       query.limit * (query.page - 1),
     );
+
+    return {
+      data,
+      meta: {
+        itemCount: data.length,
+        totalItems: total,
+        itemsPerPage: query.limit,
+        totalPages: Math.ceil(total / query.limit),
+        currentPage: query.page,
+      },
+    };
   }
 
   @Get(':id')

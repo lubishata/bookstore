@@ -26,13 +26,13 @@ export class BooksService {
         {},
       );
 
-    const [data, count] = await this.bookRepository.findAndCount({
+    const [data, total] = await this.bookRepository.findAndCount({
       take,
       skip,
       where,
     });
 
-    return { data, count };
+    return { data, total };
   }
 
   findOne(id: number) {
