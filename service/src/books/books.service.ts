@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, ILike } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
-import { Filter } from './filter';
+import { Filter, createFilterWhereClause } from './pagination/filter';
 
 @Injectable()
 export class BooksService {
@@ -17,14 +17,8 @@ export class BooksService {
     return this.bookRepository.save(book);
   }
 
-  async findAll(filters: Filter[], take = 10, skip = 0) {
-    const where = filters
-      .filter((filter) => filter.value)
-      .map((filter) => ({ [filter.property]: ILike(`%${filter.value}%`) }))
-      .reduce(
-        (accumulator, current) => Object.assign(accumulator, current),
-        {},
-      );
+  async findAll(filters: Filter[] = [], take = 10, skip = 0) {
+    const where = createFilterWhereClause(filters);
 
     const [data, total] = await this.bookRepository.findAndCount({
       take,

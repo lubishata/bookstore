@@ -4,7 +4,7 @@ import { plainToInstance } from 'class-transformer';
 import { BooksService } from './books.service';
 import { Book } from './entities/book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
-import { Filter } from './filter';
+import { Filter } from './pagination/filter';
 
 const filters: Filter[] = [
   { property: 'title', value: 'title' },

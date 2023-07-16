@@ -1,4 +1,4 @@
-import { Book } from './entities/book.entity';
+import { Book } from '../entities/book.entity';
 
 export interface PaginationMeta {
   itemCount: number;

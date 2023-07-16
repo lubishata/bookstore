@@ -14,8 +14,8 @@ import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { PaginationParamsDto } from './dto/pagination-params.dto';
-import { Filter } from './filter';
-import { createPaginationResponse } from './pagination';
+import { Filter } from './pagination/filter';
+import { createPaginationResponse } from './pagination/pagination';
 
 @Controller('books')
 export class BooksController {
