@@ -15,6 +15,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { PaginationParamsDto } from './dto/pagination-params.dto';
 import { Filter } from './filter';
+import { createPaginationResponse } from './pagination';
 
 @Controller('books')
 export class BooksController {
@@ -39,16 +40,7 @@ export class BooksController {
       query.limit * (query.page - 1),
     );
 
-    return {
-      data,
-      meta: {
-        itemCount: data.length,
-        totalItems: total,
-        itemsPerPage: query.limit,
-        totalPages: Math.ceil(total / query.limit),
-        currentPage: query.page,
-      },
-    };
+    return createPaginationResponse(data, total, query.page, query.limit);
   }
 
   @Get(':id')
