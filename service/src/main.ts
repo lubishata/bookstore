@@ -20,7 +20,7 @@ async function bootstrap() {
   const host = configService.get('SERVER_HOST') || '127.0.0.1';
   const port = +configService.get('SERVER_PORT') || 3000;
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(port, host);
 }

@@ -37,6 +37,11 @@ const updateBookDto = {
   quantity: 15,
 };
 
+const queryPaginationDto = {
+  page: 1,
+  limit: 10,
+};
+
 const mockBooksService = {
   create: jest.fn((dto: CreateBookDto) =>
     Promise.resolve({
@@ -44,7 +49,7 @@ const mockBooksService = {
       ...dto,
     }),
   ),
-  findAll: jest.fn(() => Promise.resolve(books)),
+  findAll: jest.fn(() => Promise.resolve({ data: books, count: books.length })),
   findOne: jest.fn((id: number) =>
     id === 3
       ? Promise.reject()
@@ -110,7 +115,10 @@ describe('BooksController', () => {
 
   describe('findAll', () => {
     it('should return list of books', async () => {
-      expect(await controller.findAll()).toEqual(books);
+      expect(await controller.findAll(queryPaginationDto)).toEqual({
+        data: books,
+        count: books.length,
+      });
       expect(mockBooksService.findAll).toHaveBeenCalled();
     });
   });

@@ -6,12 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
   NotFoundException,
   ParseIntPipe,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { PaginationParamsDto } from './dto/pagination-params.dto';
+import { Filter } from './filter';
 
 @Controller('books')
 export class BooksController {
@@ -23,8 +26,18 @@ export class BooksController {
   }
 
   @Get()
-  findAll() {
-    return this.booksService.findAll();
+  findAll(@Query() query: PaginationParamsDto) {
+    const filters = [
+      new Filter('title', query.title),
+      new Filter('author', query.author),
+      new Filter('isbn', query.isbn),
+    ];
+
+    return this.booksService.findAll(
+      filters,
+      query.limit,
+      query.limit * (query.page - 1),
+    );
   }
 
   @Get(':id')

@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, ILike } from 'typeorm';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
+import { Filter } from './filter';
 
 @Injectable()
 export class BooksService {
@@ -16,8 +17,22 @@ export class BooksService {
     return this.bookRepository.save(book);
   }
 
-  findAll() {
-    return this.bookRepository.find();
+  async findAll(filters: Filter[], take = 10, skip = 0) {
+    const where = filters
+      .filter((filter) => filter.value)
+      .map((filter) => ({ [filter.property]: ILike(`%${filter.value}%`) }))
+      .reduce(
+        (accumulator, current) => Object.assign(accumulator, current),
+        {},
+      );
+
+    const [data, count] = await this.bookRepository.findAndCount({
+      take,
+      skip,
+      where,
+    });
+
+    return { data, count };
   }
 
   findOne(id: number) {
