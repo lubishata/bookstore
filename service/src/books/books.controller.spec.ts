@@ -42,6 +42,20 @@ const queryPaginationDto = {
   limit: 10,
 };
 
+const paginationMock = {
+  meta: {
+    currentPage: 1,
+    itemCount: 2,
+    itemsPerPage: 10,
+    totalItems: 2,
+    totalPages: 1,
+  },
+  links: {
+    first: '/books?limit=10',
+    last: '/books?page=1&limit=10',
+  },
+};
+
 const mockBooksService = {
   create: jest.fn((dto: CreateBookDto) =>
     Promise.resolve({
@@ -49,7 +63,7 @@ const mockBooksService = {
       ...dto,
     }),
   ),
-  findAll: jest.fn(() => Promise.resolve({ data: books, count: books.length })),
+  findAll: jest.fn(() => Promise.resolve({ data: books, total: books.length })),
   findOne: jest.fn((id: number) =>
     id === 3
       ? Promise.reject()
@@ -117,7 +131,7 @@ describe('BooksController', () => {
     it('should return list of books', async () => {
       expect(await controller.findAll(queryPaginationDto)).toEqual({
         data: books,
-        count: books.length,
+        ...paginationMock,
       });
       expect(mockBooksService.findAll).toHaveBeenCalled();
     });

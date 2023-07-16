@@ -95,7 +95,7 @@ describe('BooksService', () => {
     it('should return array of books', async () => {
       expect(await service.findAll(filters)).toEqual({
         data: books,
-        count: books.length,
+        total: books.length,
       });
       expect(mockBookRepository.findAndCount).toHaveBeenCalled();
     });
