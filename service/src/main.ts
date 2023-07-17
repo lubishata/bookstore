@@ -21,6 +21,7 @@ async function bootstrap() {
   const port = +configService.get('SERVER_PORT') || 3000;
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.enableCors();
 
   app.connectMicroservice({
     transport: Transport.KAFKA,
