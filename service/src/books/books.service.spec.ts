@@ -4,6 +4,13 @@ import { plainToInstance } from 'class-transformer';
 import { BooksService } from './books.service';
 import { Book } from './entities/book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
+import { Filter } from './pagination/filter';
+
+const filters: Filter[] = [
+  { property: 'title', value: 'title' },
+  { property: 'author', value: 'author' },
+  { property: 'isbn', value: 'isbn' },
+];
 
 const books = [
   {
@@ -40,7 +47,7 @@ const updateBookDto = {
 const mockBookRepository = {
   create: jest.fn((dto: CreateBookDto) => plainToInstance(Book, dto)),
   save: jest.fn((book: Book) => Promise.resolve(book)),
-  find: jest.fn(() => Promise.resolve(books)),
+  findAndCount: jest.fn(() => Promise.resolve([books, books.length])),
   findOneByOrFail: jest.fn(({ id }: { id: number }) =>
     Promise.resolve(
       plainToInstance(Book, {
@@ -86,8 +93,11 @@ describe('BooksService', () => {
 
   describe('findAll', () => {
     it('should return array of books', async () => {
-      expect(await service.findAll()).toEqual(books);
-      expect(mockBookRepository.find).toHaveBeenCalled();
+      expect(await service.findAll(filters)).toEqual({
+        data: books,
+        total: books.length,
+      });
+      expect(mockBookRepository.findAndCount).toHaveBeenCalled();
     });
   });
 

@@ -37,6 +37,25 @@ const updateBookDto = {
   quantity: 15,
 };
 
+const queryPaginationDto = {
+  page: 1,
+  limit: 10,
+};
+
+const paginationMock = {
+  meta: {
+    currentPage: 1,
+    itemCount: 2,
+    itemsPerPage: 10,
+    totalItems: 2,
+    totalPages: 1,
+  },
+  links: {
+    first: '/books?limit=10',
+    last: '/books?page=1&limit=10',
+  },
+};
+
 const mockBooksService = {
   create: jest.fn((dto: CreateBookDto) =>
     Promise.resolve({
@@ -44,7 +63,7 @@ const mockBooksService = {
       ...dto,
     }),
   ),
-  findAll: jest.fn(() => Promise.resolve(books)),
+  findAll: jest.fn(() => Promise.resolve({ data: books, total: books.length })),
   findOne: jest.fn((id: number) =>
     id === 3
       ? Promise.reject()
@@ -110,19 +129,22 @@ describe('BooksController', () => {
 
   describe('findAll', () => {
     it('should return list of books', async () => {
-      expect(await controller.findAll()).toEqual(books);
+      expect(await controller.findAll(queryPaginationDto)).toEqual({
+        data: books,
+        ...paginationMock,
+      });
       expect(mockBooksService.findAll).toHaveBeenCalled();
     });
   });
 
   describe('findOne', () => {
     it('should return a single book', async () => {
-      expect(await controller.findOne('1')).toEqual(books[0]);
+      expect(await controller.findOne(1)).toEqual(books[0]);
       expect(mockBooksService.findOne).toHaveBeenCalledWith(1);
     });
 
     it('should throw NotFoundException on non-existent id', async () => {
-      await expect(controller.findOne('3')).rejects.toThrowError(
+      await expect(controller.findOne(3)).rejects.toThrowError(
         NotFoundException,
       );
       expect(mockBooksService.findOne).toHaveBeenCalledWith(3);
@@ -131,7 +153,7 @@ describe('BooksController', () => {
 
   describe('update', () => {
     it('should update a book', async () => {
-      expect(await controller.update('1', updateBookDto)).toEqual({
+      expect(await controller.update(1, updateBookDto)).toEqual({
         id: 1,
         ...updateBookDto,
       });
@@ -139,7 +161,7 @@ describe('BooksController', () => {
     });
 
     it('should throw NotFoundException on non-existent id', async () => {
-      await expect(controller.update('3', updateBookDto)).rejects.toThrowError(
+      await expect(controller.update(3, updateBookDto)).rejects.toThrowError(
         NotFoundException,
       );
       expect(mockBooksService.update).toHaveBeenCalledWith(3, updateBookDto);
@@ -148,12 +170,12 @@ describe('BooksController', () => {
 
   describe('remove', () => {
     it('should remove a book', async () => {
-      expect(await controller.remove('1')).toEqual(books[0]);
+      expect(await controller.remove(1)).toEqual(books[0]);
       expect(mockBooksService.remove).toHaveBeenCalledWith(1);
     });
 
     it('should throw NotFoundException on non-existent id', async () => {
-      await expect(controller.remove('3')).rejects.toThrowError(
+      await expect(controller.remove(3)).rejects.toThrowError(
         NotFoundException,
       );
       expect(mockBooksService.remove).toHaveBeenCalledWith(3);

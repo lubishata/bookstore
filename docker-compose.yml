@@ -7,7 +7,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - '5432:5432'
+      - 5432:5432
     volumes:
       - db:/data/postgresql
       - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
@@ -15,10 +15,12 @@ services:
       - bookstore
   kafka:
     image: 'bitnami/kafka:latest'
-    networks:
-      - bookstore
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
+    ports:
+      - 9092:9092
+    networks:
+      - bookstore
   backend:
     build:
       dockerfile: service/Dockerfile
