@@ -1,5 +1,3 @@
-import { Book } from '../entities/book.entity';
-
 export interface PaginationMeta {
   itemCount: number;
   totalItems: number;
@@ -15,18 +13,18 @@ export interface PaginationLinks {
   next?: string;
 }
 
-export interface PaginationResponse {
-  data: Book[];
+export interface PaginationResponse<T> {
+  data: T[];
   meta: PaginationMeta;
   links: PaginationLinks;
 }
 
-export function createPaginationResponse(
-  data: Book[],
+export function createPaginationResponse<T>(
+  data: T[],
   total: number,
   page: number,
   limit: number,
-): PaginationResponse {
+): PaginationResponse<T> {
   const last = Math.ceil(total / limit);
   const next = page + 1 > last ? undefined : page + 1;
   const previous = page - 1 < 1 ? undefined : page - 1;
