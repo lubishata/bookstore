@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Check, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
+@Check(`"quantity" >= 0`)
 export class Book {
   @PrimaryGeneratedColumn()
   id: number;
