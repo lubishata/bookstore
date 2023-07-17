@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -10,6 +11,7 @@ import { Filter, createFilterWhereClause } from './pagination/filter';
 export class BooksService {
   constructor(
     @InjectRepository(Book) private bookRepository: Repository<Book>,
+    @Inject('ORDER_SERVICE') private readonly orderClient: ClientKafka,
   ) {}
 
   create(createBookDto: CreateBookDto) {
@@ -25,6 +27,8 @@ export class BooksService {
       skip,
       where,
     });
+
+    this.orderClient.emit('order_created', 1);
 
     return { data, total };
   }
