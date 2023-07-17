@@ -5,6 +5,9 @@ import { email, password } from '../Form/js/fields';
 import Form, { IForm } from '../Form';
 import { useRef } from 'react';
 import { login } from './reducer/authSlice';
+import { translate } from '../../l10n';
+const t = (str: string, context = "bg-localization") => translate(context, str);
+
 
 interface FormValidatorProps {
   email: string;
@@ -57,14 +60,14 @@ const Login: React.FC<LoginProps> = ({ onSubmitHandler }) => {
       <h1 className="form-page__title">Login</h1>
       <Form
         fields={fields}
-        buttonLabel="Login"
+        buttonLabel={t('login')}
         onSubmitForm={onSubmit}
         afterButton={
           <Link
             className="form-page__forgotten-password-link anim-underline"
             to="/forgotten-password"
           >
-            Забравена Парола
+            {t('forgottenPassword')}
           </Link>
         }
       // ref={() => {
@@ -73,7 +76,7 @@ const Login: React.FC<LoginProps> = ({ onSubmitHandler }) => {
       />
       <div className="form-page__bottom-link">
         <Link className="anim-underline" to="/registration">
-          Регистрация
+          {t('registration')}
         </Link>
       </div>
     </div>

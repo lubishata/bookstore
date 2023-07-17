@@ -1,13 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 //import { RootState } from '../path/to/your/rootReducer'; // Import your RootState type
-
 import FooterLink from './FooterLink';
 import './style/footerstyle.css';
+import { translate } from '../../l10n';
+import InnerHTML from '../../l10n/innerHTML';
+const t = (str: string, context = "bg-localization") => translate(context, str);
 
 interface FooterProps {
     url: string;
 }
+
 
 const Footer: React.FC<FooterProps> = ({ url }) => {
     // If you need to access data from Redux store, use useSelector hook
@@ -17,24 +20,15 @@ const Footer: React.FC<FooterProps> = ({ url }) => {
     return (
         <footer className="footer">
             <div className="footer__container">
-                <i className="footer__logo icon-oblak" />
+                <i className="footer__logo" />
                 <div className="footer__content">
                     <div className="footer__text">
-                        <p>
-                            <span>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                                scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-                                into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                                release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                                software like Aldus PageMaker including versions of Lorem Ipsum.
-                            </span>
-                        </p>
+                        <InnerHTML str={t('loremIpsumDummyText')} />
                     </div>
                     <ul>
-                        <FooterLink to="/footerlistcontent1" label={"footerlistcontent1"} className="footer__link--first" url={url} />
-                        <FooterLink to="/footerlistcontent2" label={"footerlistcontent2"} url={url} />
-                        <FooterLink to="/footerlistcontent3" label={"footerlistcontent3"} url={url} />
+                        <FooterLink to="/footerlistcontent1" label={t('footer.footerLinkLabel1')} className="footer__link--first" url={url} />
+                        <FooterLink to="/footerlistcontent2" label={t('footer.footerLinkLabel2')} url={url} />
+                        <FooterLink to="/footerlistcontent3" label={t('footer.footerLinkLabel3')} url={url} />
                     </ul>
                 </div>
             </div>

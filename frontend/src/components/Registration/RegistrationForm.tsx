@@ -7,6 +7,8 @@ import {
 } from "../Form/js/fields";
 import { checkStringNotInAnotherString } from "../Form/js/passwordHints";
 import { useDispatch } from "react-redux";
+import { translate } from '../../l10n';
+const t = (str: string, context = "bg-localization") => translate(context, str);
 
 const fields = {
     email,
@@ -16,7 +18,7 @@ const fields = {
             {
                 fields: ['email'],
                 validate: checkStringNotInAnotherString,
-                message: "съдържа",
+                message: t('registrationForm.passwordContainEmail'),
             },
         ],
     },
@@ -28,7 +30,7 @@ const fields = {
                 validate(value: string, pas: string) {
                     return !(pas && pas === value);
                 },
-                message: "не съвпада",
+                message: t('registrationForm.passwordsDoesntMatch'),
             },
         ],
     },
@@ -60,7 +62,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         >
             <Form
                 fields={fields}
-                buttonLabel="регистрация"
+                buttonLabel={t('registration')}
                 onSubmitForm={onSubmit}
             // ref={(instance) => {
             //   formRef.current = instance;

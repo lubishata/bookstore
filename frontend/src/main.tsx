@@ -2,13 +2,14 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom'
 import App from './App';
+import './l10n/bg_BG';
 
 const rootElement = document.getElementById('root')!;
 
 createRoot(rootElement).render(
     // <React.StrictMode>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
     // </React.StrictMode>
 );
