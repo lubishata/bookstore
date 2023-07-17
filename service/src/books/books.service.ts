@@ -11,7 +11,7 @@ import { Filter, createFilterWhereClause } from './pagination/filter';
 export class BooksService {
   constructor(
     @InjectRepository(Book) private bookRepository: Repository<Book>,
-    @Inject('ORDER_SERVICE') private readonly orderClient: ClientKafka,
+    @Inject('BOOK_SERVICE') private readonly bookClient: ClientKafka,
   ) {}
 
   create(createBookDto: CreateBookDto) {
@@ -27,8 +27,6 @@ export class BooksService {
       skip,
       where,
     });
-
-    this.orderClient.emit('order_created', 1);
 
     return { data, total };
   }
@@ -48,5 +46,18 @@ export class BooksService {
   async remove(id: number) {
     const book = await this.findOne(id);
     return this.bookRepository.remove(book);
+  }
+
+  async purchase(id: number, userId: number) {
+    const book = await this.findOne(id);
+
+    const updated = await this.bookRepository.save({
+      ...book,
+      quantity: book.quantity - 1,
+    });
+
+    this.bookClient.emit('book_purchased', { bookId: book.id, userId });
+
+    return updated;
   }
 }

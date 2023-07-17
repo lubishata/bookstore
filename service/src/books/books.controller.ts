@@ -9,13 +9,18 @@ import {
   Query,
   NotFoundException,
   ParseIntPipe,
+  ValidationPipe,
+  BadRequestException,
 } from '@nestjs/common';
+import { EventPattern, Payload } from '@nestjs/microservices';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { PaginationParamsDto } from './dto/pagination-params.dto';
 import { Filter } from './pagination/filter';
 import { createPaginationResponse } from './pagination/pagination';
+import { BookPurchasedEvent } from './events/book-purchased.event';
+import { EntityNotFoundError } from 'typeorm';
 
 @Controller('books')
 export class BooksController {
@@ -65,5 +70,22 @@ export class BooksController {
     return this.booksService.remove(id).catch(() => {
       throw new NotFoundException();
     });
+  }
+
+  @Post(':id/purchase')
+  async purchase(@Param('id', ParseIntPipe) id: number) {
+    return this.booksService.purchase(id, 1).catch((err) => {
+      if (err instanceof EntityNotFoundError) {
+        throw new NotFoundException();
+      } else {
+        throw new BadRequestException();
+      }
+    });
+  }
+
+  @EventPattern('book_purchased')
+  handleBookPurchased(@Payload(ValidationPipe) data: BookPurchasedEvent) {
+    console.log(typeof data);
+    console.log(data);
   }
 }

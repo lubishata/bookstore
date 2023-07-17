@@ -10,15 +10,15 @@ import { Book } from './entities/book.entity';
     TypeOrmModule.forFeature([Book]),
     ClientsModule.register([
       {
-        name: 'ORDER_SERVICE',
+        name: 'BOOK_SERVICE',
         transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: 'order',
+            clientId: 'purchase',
             brokers: ['kafka:9092'],
           },
           consumer: {
-            groupId: 'order-consumer',
+            groupId: 'purchase-consumer',
           },
         },
       },
