@@ -11,8 +11,11 @@ import {
   ParseIntPipe,
   ValidationPipe,
   BadRequestException,
+  Sse,
 } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
+import { EntityNotFoundError } from 'typeorm';
+import { Observable } from 'rxjs';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -20,11 +23,19 @@ import { PaginationParamsDto } from './dto/pagination-params.dto';
 import { Filter } from './pagination/filter';
 import { createPaginationResponse } from './pagination/pagination';
 import { BookPurchasedEvent } from './events/book-purchased.event';
-import { EntityNotFoundError } from 'typeorm';
+import { SSEService } from '@/sse/sse.service';
 
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(
+    private readonly booksService: BooksService,
+    private readonly sseService: SSEService,
+  ) {}
+
+  @Sse('sse')
+  sse(): Observable<MessageEvent> {
+    return this.sseService.sse();
+  }
 
   @Post()
   create(@Body() createBookDto: CreateBookDto) {
@@ -85,7 +96,6 @@ export class BooksController {
 
   @EventPattern('book_purchased')
   handleBookPurchased(@Payload(ValidationPipe) data: BookPurchasedEvent) {
-    console.log(typeof data);
-    console.log(data);
+    this.sseService.pushEvent({ data } as MessageEvent);
   }
 }

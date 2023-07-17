@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksService } from './books.service';
 import { BooksController } from './books.controller';
 import { Book } from './entities/book.entity';
+import { SSEModule } from '@/sse/sse.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { Book } from './entities/book.entity';
         },
       },
     ]),
+    SSEModule,
   ],
   controllers: [BooksController],
   providers: [BooksService],
