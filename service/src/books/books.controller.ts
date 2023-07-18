@@ -12,6 +12,7 @@ import {
   ValidationPipe,
   BadRequestException,
   Sse,
+  HttpCode,
 } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { EntityNotFoundError } from 'typeorm';
@@ -85,6 +86,7 @@ export class BooksController {
     });
   }
 
+  @HttpCode(200)
   @Post(':id/purchase')
   async purchase(@Param('id', ParseIntPipe) id: number) {
     return this.booksService.purchase(id, 1).catch((err) => {

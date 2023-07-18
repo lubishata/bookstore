@@ -27,10 +27,10 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
-        brokers: ['kafka:9092'],
+        brokers: [configService.getOrThrow('KAFKA_BROKER')],
       },
       consumer: {
-        groupId: 'purchase-consumer',
+        groupId: configService.getOrThrow('KAFKA_GROUP_ID'),
       },
     },
   });

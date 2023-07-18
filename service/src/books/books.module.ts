@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksService } from './books.service';
@@ -9,19 +10,22 @@ import { SSEModule } from '@/sse/sse.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Book]),
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'BOOK_SERVICE',
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            clientId: 'purchase',
-            brokers: ['kafka:9092'],
+        inject: [ConfigService],
+        useFactory: async (configService: ConfigService) => ({
+          transport: Transport.KAFKA,
+          options: {
+            client: {
+              clientId: configService.getOrThrow('KAFKA_CLIENT_ID'),
+              brokers: [configService.getOrThrow('KAFKA_BROKER')],
+            },
+            consumer: {
+              groupId: configService.getOrThrow('KAFKA_GROUP_ID'),
+            },
           },
-          consumer: {
-            groupId: 'purchase-consumer',
-          },
-        },
+        }),
       },
     ]),
     SSEModule,

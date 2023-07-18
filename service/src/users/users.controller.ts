@@ -23,13 +23,4 @@ export class UsersController {
         throw new BadRequestException();
       });
   }
-
-  @Post('/login')
-  async findOne(@Body() createUserDto: CreateUserDto) {
-    const user = await this.usersService.findOneByEmail(createUserDto.email);
-
-    return user && (await bcrypt.compare(createUserDto.password, user.password))
-      ? user
-      : null;
-  }
 }
