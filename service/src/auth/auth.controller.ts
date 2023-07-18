@@ -1,27 +1,39 @@
-import { Controller, Body, Post, Get, Request, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard/auth.guard';
-import { SignInDto } from './dto/sign-in-dto/sign-in-dto';
+import { AuthRequest } from './interface/auth-request.interface';
+import { LocalAuthGuard } from './guard/local-auth.guard';
+import { JwtAuthGuard } from './guard/jwt-auth.guard';
+import { RolesGuard } from './guard/roles.guard';
+import { HasRoles } from './guard/has-roles.decorator';
+import { Role } from './enum/role.enum';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService){}
+  constructor(private authService: AuthService) {}
 
-    @HttpCode(HttpStatus.OK)
-    @Post('login')
-    signIn(@Body() signInDTO: SignInDto){
-        return this.authService.signIn(signInDTO.email, signInDTO.password);
-    }
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Req() req: AuthRequest) {
+    return this.authService.login(req.user);
+  }
 
-    @UseGuards(AuthGuard)
-    @Get('profile')
-    getProfile(@Request() req:any){
-        return req.user;
-    }
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Req() req: AuthRequest) {
+    return req.user;
+  }
 
-    @UseGuards(AuthGuard)
-    @Get('logout')
-    logout(@Request() req:any){
-        return HttpStatus.OK;
-    }
+  @HasRoles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('admin')
+  onlyAdmin(@Req() req: AuthRequest) {
+    return req.user;
+  }
+
+  @HasRoles(Role.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('user')
+  onlyUser(@Req() req: AuthRequest) {
+    return req.user;
+  }
 }
