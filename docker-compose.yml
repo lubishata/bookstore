@@ -1,73 +1,78 @@
 version: '3.8'
 services:
-  db:
-    image: postgres:14.1-alpine
+  postgresql:
+    image: bitnami/postgresql:latest
+    container_name: postgresql
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD=admin
+      - POSTGRESQL_DATABASE=bookstore
     ports:
       - 5432:5432
     volumes:
-      - db:/data/postgresql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - postgresql-data:/bitnami/postgresql
     networks:
       - bookstore
+
   kafka:
-    image: 'bitnami/kafka:latest'
+    image: bitnami/kafka:latest
+    container_name: kafka
+    restart: always
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
     ports:
       - 9092:9092
+    volumes:
+      - kafka-data:/bitnami
     networks:
       - bookstore
+
   backend:
+    container_name: backend
     build:
       dockerfile: service/Dockerfile
       context: .
       target: dev
     volumes:
       - ./service:/app
-      - ./logs:/home/node/.npm/_logs/
     depends_on:
-      - db
+      - postgresql
       - kafka
-    restart: 'always'
+    restart: always
     ports:
       - 3000:3000
       - 9229:9229
     env_file:
       - ./service/.env
-    links:
-      - db
-      - kafka
     networks:
       - bookstore
+
   frontend:
+    container_name: frontend
     build:
       dockerfile: frontend/Dockerfile
       context: .
       target: dev
     volumes:
-      - ./frontend/src:/app/src
-      - ./logs:/home/node/.npm/_logs/
+      - ./frontend:/app
     depends_on:
       - backend
-    restart: 'always'
+    restart: always
     ports:
       - 4000:3000
       - 9230:9229
     env_file:
       - ./frontend/.env
-    links:
-      - backend
     networks:
       - bookstore
+
 volumes:
-  db:
+  postgresql-data:
     driver: local
-  kafka:
+  kafka-data:
     driver: local
+
 networks:
   bookstore:
     name: bookstore

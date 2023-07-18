@@ -10,4 +10,4 @@ RUN npm install
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "start:debug" ]
+CMD [ "/bin/sh", "docker-entrypoint.sh" ]
