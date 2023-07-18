@@ -1,33 +1,35 @@
-import { Controller, Post, Get, Patch, Delete, Body, Param } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserDto } from './dto/user.dto/user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService){}
+  constructor(private readonly usersService: UsersService) {}
 
-    @Post()
-    create(@Body() user:UserDto):UserDto {
-        return this.usersService.create(user);
-    }
+  @Post('/signup')
+  async create(@Body() createUserDto: CreateUserDto) {
+    const saltRounds = 10;
 
-    @Get()
-    findAll(): UserDto[] {
-        return this.usersService.findAll();
-    }
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(createUserDto.password, salt);
 
-    @Get(':id')
-    findOne(@Param('id') id: number): UserDto{
-        return this.usersService.findOne(+id);
-    }
+    return this.usersService
+      .createUser({
+        ...createUserDto,
+        password: hash,
+      })
+      .catch(() => {
+        throw new BadRequestException();
+      });
+  }
 
-    @Patch(':id')
-    update(@Param('id') id:number, @Body() user:UserDto){
-        return this.usersService.update(+id, user);
-    }
+  @Post('/login')
+  async findOne(@Body() createUserDto: CreateUserDto) {
+    const user = await this.usersService.findOneByEmail(createUserDto.email);
 
-    @Delete(':id')
-    delete(@Param('id') id:number):UserDto{
-        return this.usersService.delete(+id);
-    }
+    return user && (await bcrypt.compare(createUserDto.password, user.password))
+      ? user
+      : null;
+  }
 }

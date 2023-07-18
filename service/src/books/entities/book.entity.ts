@@ -1,23 +1,24 @@
 import { Entity, Check, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
+@Check(`"price" > 0`)
 @Check(`"quantity" >= 0`)
 export class Book {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   title: string;
 
-  @Column()
+  @Column({ nullable: false })
   author: string;
 
-  @Column()
+  @Column({ nullable: false, unique: true })
   isbn: string;
 
-  @Column({ unsigned: true, type: 'decimal', precision: 5, scale: 2 })
+  @Column({ nullable: false, type: 'decimal', precision: 5, scale: 2 })
   price: number;
 
-  @Column({ unsigned: true })
+  @Column({ nullable: false })
   quantity: number;
 }
