@@ -49,10 +49,10 @@ This web application for an online bookstore allows users to browse, search, and
    This command will build the backend and frontend containers, along with the PostgreSQL and Kafka containers. The services will be configured based on the Docker Compose file, and your application should be up and running.
 
 4. Access the application in your browser:
-   - Frontend: [http://localhost:3000](http://localhost:3000)
-   - Backend: [http://localhost:4000](http://localhost:4000)
+   - Frontend: [http://localhost:4000](http://localhost:4000)
+   - Backend: [http://localhost:3000](http://localhost:3000)
 
-## Usage
+## Usage 
 
 - Register a new user account or log in with an existing account.
 - Browse the available books, search by title, author, or ISBN, and view detailed information about each book.
