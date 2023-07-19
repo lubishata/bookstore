@@ -18,7 +18,7 @@ const Button = (props: ButtonProps) => {
     'btn--black': type === "black",
     'btn--rounded': rounded,
     'btn--gradient-lightblue': gradient == "light",
-    'btn--gradient-darkblue': gradient == "dark",
+    'btn-dark': gradient == "dark",
   });
 
   return (

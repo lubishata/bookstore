@@ -204,7 +204,7 @@ class FormField extends PureComponent {
     if (this.props.hide) {
       style = { display: 'none' };
     }
-    return (<div className="field-group clearfix m-10" style={style}>
+    return (<div className="field-group clearfix m-10 mt-3 p-2" style={style}>
       {inputField}
       <FormValidator
         isValid={fieldState.valid}

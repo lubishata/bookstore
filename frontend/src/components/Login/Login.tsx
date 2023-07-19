@@ -48,19 +48,19 @@ const Login = () => {
         fields={fields}
         buttonLabel={t('login')}
         onSubmitForm={onSubmit}
-        formClassName="form-group"
-        afterButton={
-          <Link
-            className="form-page__forgotten-password-link anim-underline"
-            to="/forgotten-password"
-          >
-            {t('forgottenPassword')}
-          </Link>
-        }
+        formClassName="form-group col-xs-6"
       />
       <div className="form-page__bottom-link">
         <Link className="anim-underline" to="/registration">
           {t('registration')}
+        </Link>
+      </div>
+      <div className="form-page__bottom-link">
+        <Link
+          className="form-page__forgotten-password-link anim-underline"
+          to="/forgotten-password"
+        >
+          {t('forgottenPassword')}
         </Link>
       </div>
     </div>
