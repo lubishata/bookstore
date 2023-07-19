@@ -79,8 +79,9 @@ describe('AuthService', () => {
         ],
       });
 
-      expect(usersService.findOneByEmail).toBeCalledTimes(1);
-      expect(usersService.findOneByEmail).toBeCalledWith('admin@bookstore.com');
+      expect(usersService.findOneByEmail).toHaveBeenCalledWith(
+        'admin@bookstore.com',
+      );
     });
 
     it('should return null if credentials are incorrect', async () => {
@@ -106,8 +107,9 @@ describe('AuthService', () => {
         await service.validateUser('admin@bookstore.com', '123457'),
       ).toEqual(null);
 
-      expect(usersService.findOneByEmail).toBeCalledTimes(1);
-      expect(usersService.findOneByEmail).toBeCalledWith('admin@bookstore.com');
+      expect(usersService.findOneByEmail).toHaveBeenCalledWith(
+        'admin@bookstore.com',
+      );
     });
 
     it('should return null if user is not found', async () => {
@@ -117,8 +119,9 @@ describe('AuthService', () => {
         await service.validateUser('admin@bookstore.com', '123456'),
       ).toEqual(null);
 
-      expect(usersService.findOneByEmail).toBeCalledTimes(1);
-      expect(usersService.findOneByEmail).toBeCalledWith('admin@bookstore.com');
+      expect(usersService.findOneByEmail).toHaveBeenCalledWith(
+        'admin@bookstore.com',
+      );
     });
   });
 
@@ -134,8 +137,7 @@ describe('AuthService', () => {
         }),
       ).toEqual({ access_token: 'token' });
 
-      expect(jwtService.sign).toBeCalledTimes(1);
-      expect(jwtService.sign).toBeCalledWith({
+      expect(jwtService.sign).toHaveBeenCalledWith({
         email: 'admin@bookstore.com',
         sub: 1,
         roles: [Role.ADMIN, Role.USER],

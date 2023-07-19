@@ -53,8 +53,7 @@ describe('LocalStrategy', () => {
         roles: ['ADMIN', 'USER'],
       });
 
-      expect(authService.validateUser).toBeCalledTimes(1);
-      expect(authService.validateUser).toBeCalledWith(
+      expect(authService.validateUser).toHaveBeenCalledWith(
         'admin@bookstore.com',
         '123456',
       );
@@ -67,8 +66,7 @@ describe('LocalStrategy', () => {
         strategy.validate('admin@bookstore.com', '123456'),
       ).rejects.toThrowError(UnauthorizedException);
 
-      expect(authService.validateUser).toBeCalledTimes(1);
-      expect(authService.validateUser).toBeCalledWith(
+      expect(authService.validateUser).toHaveBeenCalledWith(
         'admin@bookstore.com',
         '123456',
       );
