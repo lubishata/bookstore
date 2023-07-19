@@ -47,15 +47,14 @@ export class BooksController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
   async create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto).catch((err) => {
-      console.log(err);
+    return this.booksService.create(createBookDto).catch(() => {
       throw new BadRequestException();
     });
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(@Query() query: PaginationParamsDto) {
+  async findAll(@Query(ValidationPipe) query: PaginationParamsDto) {
     const filters: Filter[] = [
       { property: 'title', value: query.title },
       { property: 'author', value: query.author },

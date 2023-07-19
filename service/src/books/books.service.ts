@@ -6,6 +6,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
 import { Filter, createFilterWhereClause } from './pagination/filter';
+import { EntityList } from './interface/entity-list.interface';
 
 @Injectable()
 export class BooksService {
@@ -19,7 +20,11 @@ export class BooksService {
     return this.bookRepository.save(book);
   }
 
-  async findAll(filters: Filter[] = [], take = 10, skip = 0) {
+  async findAll(
+    filters: Filter[] = [],
+    take = 10,
+    skip = 0,
+  ): Promise<EntityList<Book>> {
     const where = createFilterWhereClause(filters);
 
     const [data, total] = await this.bookRepository.findAndCount({

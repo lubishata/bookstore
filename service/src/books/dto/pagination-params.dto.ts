@@ -1,13 +1,10 @@
-import { Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsString, Min, Max } from 'class-validator';
 
 export class PaginationParamsDto {
-  @Type(() => Number)
   @IsNumber()
   @Min(1)
   page = 1;
 
-  @Type(() => Number)
   @IsNumber()
   @Min(1)
   @Max(100)
