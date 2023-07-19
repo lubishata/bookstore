@@ -1,4 +1,16 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import App from './app';
-ReactDOM.render(<App />, document.getElementById('root'));
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'
+import './l10n/bg_BG';
+import App from './App';
+
+
+const rootElement = document.getElementById('root')!;
+
+createRoot(rootElement).render(
+    // <React.StrictMode>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+    // </React.StrictMode>
+);
