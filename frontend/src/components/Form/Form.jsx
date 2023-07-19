@@ -34,56 +34,56 @@ class Form extends PureComponent {
     this.formIsValid = this.formIsValid.bind(this);
   }
 
-//   UNSAFE_componentWillMount() {
-//     if (this.props.fields.captcha) {
-//       const verifyCallback = (value) => {
-//         this.setState({
-//           captcha: {
-//             value,
-//             message: null,
-//             valid: true,
-//           },
-//         });
-//       };
-//       const expiredCallback = () => {
-//         this.validateField({ name: 'captcha', value: '' });
-//       };
-//       setTimeout(() => {
-//         window.grecaptcha.render('recaptcha-container', {
-//           sitekey: '6Le_0vMUAAAAAHnGyFO05ixQmqEvP0amsY3zaR-T',
-//           callback: verifyCallback,
-//           'expired-callback': expiredCallback,
-//         });
-//       }, 300);
-//       // window.onloadCallback = function () {
-//       //   window.grecaptcha.render('recaptcha-container', {
-//       //     sitekey: '6Le_0vMUAAAAAHnGyFO05ixQmqEvP0amsY3zaR-T',
-//       //     callback: verifyCallback,
-//       //     'expired-callback': expiredCallback,
-//       //   });
-//       // };
-//     }
-//   }
+  //   UNSAFE_componentWillMount() {
+  //     if (this.props.fields.captcha) {
+  //       const verifyCallback = (value) => {
+  //         this.setState({
+  //           captcha: {
+  //             value,
+  //             message: null,
+  //             valid: true,
+  //           },
+  //         });
+  //       };
+  //       const expiredCallback = () => {
+  //         this.validateField({ name: 'captcha', value: '' });
+  //       };
+  //       setTimeout(() => {
+  //         window.grecaptcha.render('recaptcha-container', {
+  //           sitekey: '6Le_0vMUAAAAAHnGyFO05ixQmqEvP0amsY3zaR-T',
+  //           callback: verifyCallback,
+  //           'expired-callback': expiredCallback,
+  //         });
+  //       }, 300);
+  //       // window.onloadCallback = function () {
+  //       //   window.grecaptcha.render('recaptcha-container', {
+  //       //     sitekey: '6Le_0vMUAAAAAHnGyFO05ixQmqEvP0amsY3zaR-T',
+  //       //     callback: verifyCallback,
+  //       //     'expired-callback': expiredCallback,
+  //       //   });
+  //       // };
+  //     }
+  //   }
 
   componentDidUpdate(prevProps) {
-  if (prevProps.fields !== this.props.fields) {
-    const { fields } = this.props;
-    this.setState((prevState) => {
-      const newState = { ...prevState };
-      for (const name in fields) {
-        const field = fields[name];
-        newState[name] = {
-          value: field.value || '',
-          valid: field.valid !== undefined ? field.valid : !!field.value,
-          message: null,
-        };
-      }
-      newState.activeField = null;
-      newState.inProgress = null;
-      return newState;
-    });
+    if (prevProps.fields !== this.props.fields) {
+      const { fields } = this.props;
+      this.setState((prevState) => {
+        const newState = { ...prevState };
+        for (const name in fields) {
+          const field = fields[name];
+          newState[name] = {
+            value: field.value || '',
+            valid: field.valid !== undefined ? field.valid : !!field.value,
+            message: null,
+          };
+        }
+        newState.activeField = null;
+        newState.inProgress = null;
+        return newState;
+      });
+    }
   }
-}
 
   validateField({ name, value }) {
     let message = null;
@@ -307,7 +307,7 @@ class Form extends PureComponent {
           <div className="field-group mt-30">
             <Button
               className={btnClass}
-              gradient="light"
+              gradient="dark"
               rounded
               disabled={this.state.inProgress}
               onClick={this.handleSubmit}

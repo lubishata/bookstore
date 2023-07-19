@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState} from '../../store';
+import { AppDispatch, RootState } from '../../store';
 import { email, password } from '../Form/js/fields';
 import Form from '../Form';
 import { translate } from '../../l10n';
@@ -26,18 +26,11 @@ const fields = {
   }
 };
 
-interface LoginProps {
-  onSubmitHandler: (data: {
-    UserEmail: string;
-    LoginPassword: string;
-  }) => void;
-}
-
-const Login  = () => {
-  const dikiState = useSelector((state: RootState) => state);
+const Login = () => {
+  useSelector((state: RootState) => state.login);
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit = ({ email, password }: FormValidatorProps) => {
-    dispatch(login(email,password));
+    dispatch(login(email, password));
   };
 
   return (
@@ -55,18 +48,19 @@ const Login  = () => {
         fields={fields}
         buttonLabel={t('login')}
         onSubmitForm={onSubmit}
-        afterButton={
-          <Link
-            className="form-page__forgotten-password-link anim-underline"
-            to="/forgotten-password"
-          >
-            {t('forgottenPassword')}
-          </Link>
-        }
+        formClassName="form-group col-xs-6"
       />
       <div className="form-page__bottom-link">
         <Link className="anim-underline" to="/registration">
           {t('registration')}
+        </Link>
+      </div>
+      <div className="form-page__bottom-link">
+        <Link
+          className="form-page__forgotten-password-link anim-underline"
+          to="/forgotten-password"
+        >
+          {t('forgottenPassword')}
         </Link>
       </div>
     </div>

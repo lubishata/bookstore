@@ -44,29 +44,30 @@ export interface RegistrationFormProps {
 
 
 
-const RegistrationForm  = () => {
+const RegistrationForm = () => {
 
     const dispatch = useDispatch<AppDispatch>();
-        const onSubmit = (data: any) => {
-            dispatch(registerUser(data));
+    const onSubmit = (data: any) => {
+        dispatch(registerUser(data));
     };
 
     return (
         <div
-        className="registration"
-        style={{
-            marginTop: "200px",
-            position: "relative",
-            display: "block",
-            textAlign: "center",
-        }}
-    >
-        <Form
-            fields={fields}
-            buttonLabel={t('registration')}
-            onSubmitForm={onSubmit}
-        />
-    </div>
+            className="registration row"
+            style={{
+                marginTop: "200px",
+                position: "relative",
+                display: "block",
+                textAlign: "center",
+            }}
+        >
+            <Form
+                fields={fields}
+                buttonLabel={t('registration')}
+                onSubmitForm={onSubmit}
+                formClassName="form-group col-xs-6"
+            />
+        </div>
 
     );
 }

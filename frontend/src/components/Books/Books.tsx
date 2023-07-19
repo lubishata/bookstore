@@ -7,11 +7,16 @@ import BooksSearch from './BooksSearch';
 
 
 const Books: React.FC = () => {
- 
+
   return (
-    <div>
-        <BooksSearch/>
-        <BooksPage/>
+    <div style={{
+      margin: "50px auto",
+      position: "relative",
+      display: "block",
+      textAlign: "center",
+    }}>
+      <BooksSearch />
+      <BooksPage />
     </div>
   );
 };

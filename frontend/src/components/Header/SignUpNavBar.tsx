@@ -1,21 +1,22 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { translate } from '../../l10n';
 const t = (str: string, context = "bg-localization") => translate(context, str);
 
-function NavBar() {
+function SignUpNavBar() {
 
     const navBars = [
         {
-            name: 'login',
-            pathTo: '/login',
-            ariaLabel: 'Login',
-            barLabel: t('login')
+            name: 'profile',
+            pathTo: '/profile',
+            ariaLabel: 'profile',
+            barLabel: t('profile')
         },
         {
-            name: 'registration',
-            pathTo: '/registration',
-            ariaLabel: 'Registration',
-            barLabel: t('registration')
+            name: 'logout',
+            pathTo: '/logout',
+            ariaLabel: 'Logout',
+            barLabel: t('logout')
         },
     ]
 
@@ -37,4 +38,4 @@ function NavBar() {
 };
 
 
-export default NavBar;
+export default SignUpNavBar;
