@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState} from '../../store';
+import { AppDispatch, RootState } from '../../store';
 import { email, password } from '../Form/js/fields';
 import Form from '../Form';
 import { translate } from '../../l10n';
@@ -26,18 +26,11 @@ const fields = {
   }
 };
 
-interface LoginProps {
-  onSubmitHandler: (data: {
-    UserEmail: string;
-    LoginPassword: string;
-  }) => void;
-}
-
-const Login  = () => {
-  const dikiState = useSelector((state: RootState) => state);
+const Login = () => {
+  useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit = ({ email, password }: FormValidatorProps) => {
-    dispatch(login(email,password));
+    dispatch(login(email, password));
   };
 
   return (
