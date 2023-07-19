@@ -1,11 +1,13 @@
 import React from 'react';
+import { useState } from "react";
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState} from '../../store';
 import { email, password } from '../Form/js/fields';
-import Form, { IForm } from '../Form';
-import { useRef } from 'react';
-import { login } from './reducer/authSlice';
+import Form from '../Form';
 import { translate } from '../../l10n';
+import { login } from './reducer/loginSlice';
+
 const t = (str: string, context = "bg-localization") => translate(context, str);
 
 
@@ -31,20 +33,11 @@ interface LoginProps {
   }) => void;
 }
 
-const Login: React.FC<LoginProps> = ({ onSubmitHandler }) => {
-  const formRef = React.useRef<IForm | null>(null);
-  const dispatch = useDispatch();
-  let ref = useRef(0);
-
+const Login  = () => {
+  const dikiState = useSelector((state: RootState) => state);
+  const dispatch = useDispatch<AppDispatch>();
   const onSubmit = ({ email, password }: FormValidatorProps) => {
-    const body: any = {
-      UserEmail: email,
-      LoginPassword: password,
-    };
-    console.log(body);
-    onSubmitHandler(body);
-    dispatch(login());
-    localStorage.setItem('username', body.UserEmail); // Store username in localStorage
+    dispatch(login(email,password));
   };
 
   return (
@@ -70,9 +63,6 @@ const Login: React.FC<LoginProps> = ({ onSubmitHandler }) => {
             {t('forgottenPassword')}
           </Link>
         }
-      // ref={() => {
-      //   ref.current = ref.current + 1
-      // }}
       />
       <div className="form-page__bottom-link">
         <Link className="anim-underline" to="/registration">

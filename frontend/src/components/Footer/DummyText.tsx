@@ -2,12 +2,6 @@ import * as React from 'react';
 import { translate } from '../../l10n';
 import InnerHTML from '../../l10n/innerHTML';
 
-// export interface FooterLinkProps  {
-//   to: string;
-//   label: string;
-//   className?: string;
-//   url: string;
-// }
 const t = (str: string, context = "bg-localization") => translate(context, str);
 
 const DummyText = () => (

@@ -4,7 +4,6 @@ const source: any = {
 export type Bundle = "bg-localization" | "en-localization";
 
 type Resources = {
-    // [x: string]: string | Resources | ((s: any) => string);
     [x: string]: any;
 }
 
@@ -18,7 +17,6 @@ export const register = ({ bundle = "bg-localization", resources = {} }: regiser
 };
 
 export const translate = (context: string, str: string,): Resources['resourceName'] => {
-    console.log(source);
     if (context && str && source[context]) {
         const ns = str.split(".");
         if (ns.length > 1) {

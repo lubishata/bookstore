@@ -1,6 +1,4 @@
 import * as React from 'react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import { Route } from "react-router";
 import Layout from './Layout';
 

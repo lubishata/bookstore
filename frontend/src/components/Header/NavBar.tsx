@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { translate } from '../../l10n';
-import InnerHTML from '../../l10n/innerHTML';
 const t = (str: string, context = "bg-localization") => translate(context, str);
 
 function NavBar() {
@@ -33,12 +32,6 @@ function NavBar() {
                 <Link key={item.name} className="nav-links" to={item.pathTo} aria-label={item.ariaLabel} style={{ textDecoration: 'none' }}>{item.barLabel}</Link>
             )
             )}
-            {/* <Link className="nav-links" to="/login" aria-label="Login" style={{ textDecoration: "none" }}>
-                Login
-            </Link>
-            <Link className="nav-links" to="/registration" aria-label="Login" style={{ textDecoration: "none" }}>
-                Registration
-            </Link> */}
         </nav>
     );
 };

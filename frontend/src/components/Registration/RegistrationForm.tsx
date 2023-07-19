@@ -6,8 +6,10 @@ import {
     confirmPassword,
 } from "../Form/js/fields";
 import { checkStringNotInAnotherString } from "../Form/js/passwordHints";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import { translate } from '../../l10n';
+import { registerUser } from './reducer/registrationSlice';
+import { AppDispatch, RootState } from '../../store';
 const t = (str: string, context = "bg-localization") => translate(context, str);
 
 const fields = {
@@ -40,36 +42,33 @@ export interface RegistrationFormProps {
     onSubmitHandler: (data: any) => void;
 }
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({
-    onSubmitHandler,
-}) => {
-    const formRef = React.useRef<IForm | null>(null);
-    const dispatch = useDispatch();
 
-    const onSubmit = (data: any) => {
-        onSubmitHandler(data);
+
+const RegistrationForm  = () => {
+
+    const dispatch = useDispatch<AppDispatch>();
+        const onSubmit = (data: any) => {
+            dispatch(registerUser(data));
     };
 
     return (
         <div
-            className="registration"
-            style={{
-                marginTop: "200px",
-                position: "relative",
-                display: "block",
-                textAlign: "center",
-            }}
-        >
-            <Form
-                fields={fields}
-                buttonLabel={t('registration')}
-                onSubmitForm={onSubmit}
-            // ref={(instance) => {
-            //   formRef.current = instance;
-            // }}
-            />
-        </div>
+        className="registration"
+        style={{
+            marginTop: "200px",
+            position: "relative",
+            display: "block",
+            textAlign: "center",
+        }}
+    >
+        <Form
+            fields={fields}
+            buttonLabel={t('registration')}
+            onSubmitForm={onSubmit}
+        />
+    </div>
+
     );
-};
+}
 
 export default RegistrationForm;

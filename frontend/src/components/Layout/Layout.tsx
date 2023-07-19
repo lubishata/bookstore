@@ -8,13 +8,13 @@ export interface LayoutPros {
 
 function Layout({ children }: LayoutPros) {
   return (<div>
-    <Header message={"aaaa"} />
+    <Header />
     <div id="app-content">
       <div className="page">
         {children}
       </div>
     </div>
-    <Footer url={"localhost:8080"} />
+    <Footer />
   </div>);
 }
 

@@ -1,5 +1,5 @@
 import { translate } from '../../../l10n';
-const t = (str: string, context = "bg-localization") => translate(context, str);
+const t = (str: any, context = "bg-localization") => translate(context, str);
 
 type ValidationRules = {
   isRequired?: {
@@ -16,7 +16,7 @@ const validationRules: {
 } = {
   email: {
     isRequired: {
-      message: t('fields.isRequired'),
+      message: t('fields.isRequired')(t('fields.email')),
     },
     pattern: {
       value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -25,7 +25,7 @@ const validationRules: {
   },
   password: {
     isRequired: {
-      message: t('fields.isRequired'),
+      message: t('fields.isRequired')(t('fields.password')),
     },
     pattern: {
       value: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[~!@#\^\$&\*\(\)_\+=\[\]\{\}\|,\.\?\s<>'\":;`%|-]){1,})(?!.*\s)[a-zA-Z0-9~!@#\^\$&\*\(\)_\+=\[\]\{\}\|,\.\?\s<>'\":;`%|-]{8,20}$/,
@@ -34,7 +34,7 @@ const validationRules: {
   },
   confirmPassword: {
     isRequired: {
-      message: t('fields.isRequired'),
+      message: t('fields.isRequired')(t('fields.confirmPassword')),
     },
   },
 };
