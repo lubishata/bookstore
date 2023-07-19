@@ -13,13 +13,15 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto, roleName: string) {
-    let role = await this.roleRepository.findOne({ where: { name: roleName } });
-    const user = this.userRepository.create(createUserDto);
+    const role = await this.roleRepository.findOne({
+      where: { name: roleName },
+    });
 
     if (!role) {
-      role = this.roleRepository.create({ name: roleName });
-      role = await this.roleRepository.save(role);
+      return null;
     }
+
+    const user = this.userRepository.create(createUserDto);
 
     user.roles = [role];
 
