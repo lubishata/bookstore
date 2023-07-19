@@ -4,13 +4,21 @@
     "rootDir": ".",
     "outDir": "build",
     "target": "ES6",
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "module": "esnext",
     "allowJs": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "sourceMap": true,
-    "strict": true, 
-    "lib": ["DOM"]
+    "strict": true,
+    "noEmit":false,
+    "lib": [
+      "DOM"
+    ]
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "src/main.tsx"]
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "src/main.tsx"
+  ]
 }

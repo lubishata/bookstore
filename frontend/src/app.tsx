@@ -1,8 +1,15 @@
-import React from 'react';
+import AppRouter from './AppRouter';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 function App() {
     return (
-        <>{'react setup from scratch without cra testing ts'}</>
+        <Provider store={store}>
+                <div>
+                    <AppRouter />
+                </div>
+        </Provider>
     );
 }
+
 export default App;
