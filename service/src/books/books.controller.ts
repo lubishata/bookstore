@@ -13,6 +13,7 @@ import {
   BadRequestException,
   Sse,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { EntityNotFoundError } from 'typeorm';
@@ -25,6 +26,10 @@ import { Filter } from './pagination/filter';
 import { createPaginationResponse } from './pagination/pagination';
 import { BookPurchasedEvent } from './events/book-purchased.event';
 import { SSEService } from '@/sse/sse.service';
+import { HasRoles } from '@/auth/guard/has-roles.decorator';
+import { Role } from '@/auth/enum/role.enum';
+import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
+import { RolesGuard } from '@/auth/guard/roles.guard';
 
 @Controller('books')
 export class BooksController {
@@ -38,6 +43,8 @@ export class BooksController {
     return this.sseService.sse();
   }
 
+  @HasRoles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
   async create(@Body() createBookDto: CreateBookDto) {
     return this.booksService.create(createBookDto).catch((err) => {
@@ -46,6 +53,7 @@ export class BooksController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Query() query: PaginationParamsDto) {
     const filters: Filter[] = [
@@ -63,6 +71,7 @@ export class BooksController {
     return createPaginationResponse(data, total, query.page, query.limit);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return this.booksService.findOne(id).catch(() => {
@@ -70,6 +79,8 @@ export class BooksController {
     });
   }
 
+  @HasRoles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -80,6 +91,8 @@ export class BooksController {
     });
   }
 
+  @HasRoles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     return this.booksService.remove(id).catch(() => {
@@ -87,6 +100,7 @@ export class BooksController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   @Post(':id/purchase')
   async purchase(@Param('id', ParseIntPipe) id: number) {
