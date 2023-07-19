@@ -40,7 +40,8 @@ export class BooksController {
 
   @Post()
   async create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto).catch(() => {
+    return this.booksService.create(createBookDto).catch((err) => {
+      console.log(err);
       throw new BadRequestException();
     });
   }
