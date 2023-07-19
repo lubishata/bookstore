@@ -8,8 +8,8 @@ import SignUpNavBar from './SignUpNavBar';
 
 
 function Header() {
-    const storeState = useSelector((state: RootState) => state);
-    const isUserSignIn = storeState.login.userType != "anonymousUsers";
+    const storeState = useSelector((state: RootState) => state.login);
+    const isUserSignIn = storeState.userType != "anonymousUsers";
 
     return (
 

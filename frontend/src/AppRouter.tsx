@@ -10,8 +10,8 @@ import { RootState } from "./store";
 import { useSelector } from "react-redux";
 
 const AppRouter = () => {
-    const storeState = useSelector((state: RootState) => state);
-    const isUserSignIn = storeState.login.userType === "anonymousUser";
+    const storeState = useSelector((state: RootState) => state.login);
+    const isUserSignIn = storeState.userType === "anonymousUser";
     const routesDependsOnUserStatus = isUserSignIn ? [{ path: "/login", component: <Login /> }, { path: "/registration", component: <RegistrationForm /> }] : [{ path: "/profile", component: <Profile /> }];
 
     const routes = [

@@ -27,7 +27,7 @@ const fields = {
 };
 
 const Login = () => {
-  useSelector((state: RootState) => state);
+  useSelector((state: RootState) => state.login);
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit = ({ email, password }: FormValidatorProps) => {
     dispatch(login(email, password));
@@ -48,6 +48,7 @@ const Login = () => {
         fields={fields}
         buttonLabel={t('login')}
         onSubmitForm={onSubmit}
+        formClassName="form-group"
         afterButton={
           <Link
             className="form-page__forgotten-password-link anim-underline"
