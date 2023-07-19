@@ -33,16 +33,19 @@ export const { registrationStart, registrationSuccess, registrationFailure } = r
 export default registrationSlice.reducer;
 
 // Thunk function to handle registration
-export const registerUser = (userData: { username: string; password: string }): any => async (dispatch:any) => {
+export const registerUser = (email: string, password: string): any => async (dispatch: any) => {
   try {
     dispatch(registrationStart());
-
-    const response = await fetch('https://example.com/api/register', {
+    const body = {
+      "email": email,
+      "password": password
+    }
+    const response = await fetch('http://localhost:3000/users/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {

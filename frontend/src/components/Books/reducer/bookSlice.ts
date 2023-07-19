@@ -5,6 +5,9 @@ export interface Book {
   id: string;
   title: string;
   author: string;
+  isbn: string;
+  price: string;
+  quantity: number;
   // ... other properties
 }
 
@@ -42,25 +45,32 @@ const booksSlice = createSlice({
 export const { fetchBooksStart, fetchBooksSuccess, fetchBooksFailure } = booksSlice.actions;
 
 export default booksSlice.reducer;
+//'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFjY291bnRAYWJ2Lmd6Iiwic3ViIjoxNiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE2ODk3ODA5OTEsImV4cCI6MTY4OTc4NDU5MX0.29AluIhQjSTlEKsI1ir8UgVt99jrZiudJ9kKcniI9C8"
 
-export const fetchBooks = (searchTerm: string): any => async (dispatch:any) => {
-    try {
-      dispatch(fetchBooksStart());
-      const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch books');
-      }
-      const data = await response.json();
-      const booksData = data.items; // Assuming the API response contains an 'items' array
-      const books = booksData.map((item: any) => ({
-        id: item.id,
-        title: item.volumeInfo.title,
-        author: item.volumeInfo.authors ? item.volumeInfo.authors[0] : 'Unknown',
-        // ... map other properties as needed
-      }));
-      dispatch(fetchBooksSuccess(books));
-    } catch (error) {
-      dispatch(fetchBooksFailure("error"|| 'Failed to fetch books'));
+export const fetchBooks = (searchTerm: string): any => async (dispatch: any) => {
+  try {
+    dispatch(fetchBooksStart());
+    const response = await fetch(`http://localhost:3000/books`, {
+      headers: {
+        'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFjY291bnRAYWJ2Lmd6Iiwic3ViIjoxNiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE2ODk3ODA5OTEsImV4cCI6MTY4OTc4NDU5MX0.29AluIhQjSTlEKsI1ir8UgVt99jrZiudJ9kKcniI9C8"
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch books');
     }
-  };
-  
+    const data = await response.json();
+    const booksData = data.data; // Assuming the API response contains an 'items' array
+    const books = booksData.map((item: any) => ({
+      id: item.id,
+      title: item.title,
+      author: item.author ? item.author : 'Unknown',
+      isbn: item.isbn,
+      price: item.price,
+      quantity: item.quantity,
+      // ... map other properties as needed
+    }));
+    dispatch(fetchBooksSuccess(books));
+  } catch (error) {
+    dispatch(fetchBooksFailure("error" || 'Failed to fetch books'));
+  }
+};

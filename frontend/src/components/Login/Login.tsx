@@ -27,11 +27,17 @@ const fields = {
 };
 
 const Login = () => {
-  useSelector((state: RootState) => state.login);
+  const loginState = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit = ({ email, password }: FormValidatorProps) => {
     dispatch(login(email, password));
   };
+  console.log(loginState.token);
+  if (loginState.token) {
+    const userToken = "Bearer " + loginState.token;
+
+    sessionStorage.setItem('Authorization', JSON.stringify(userToken))
+  }
 
   return (
     <div

@@ -48,7 +48,7 @@ const RegistrationForm = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const onSubmit = (data: any) => {
-        dispatch(registerUser(data));
+        dispatch(registerUser(data.email, data.password));
     };
 
     return (
