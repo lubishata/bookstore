@@ -1,13 +1,13 @@
-FROM node:18-alpine as base
-FROM base as dev 
+FROM node:18
 
-RUN mkdir /app && chown node:node /app
-WORKDIR /app
+WORKDIR /usr/src/app
 
-USER node
-COPY --chown=node:node ./service .
+COPY package*.json ./
+
 RUN npm install
 
-EXPOSE 3000
+COPY . .
+
+RUN npm run build
 
 CMD [ "/bin/sh", "docker-entrypoint.sh" ]

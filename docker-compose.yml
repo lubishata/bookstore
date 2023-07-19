@@ -31,11 +31,11 @@ services:
   backend:
     container_name: backend
     build:
-      dockerfile: service/Dockerfile
-      context: .
-      target: dev
-    volumes:
-      - ./service:/app
+      dockerfile: Dockerfile
+      context: ./service
+      # target: dev
+    # volumes:
+    #   - ./service:/app
     depends_on:
       - postgresql
       - kafka
