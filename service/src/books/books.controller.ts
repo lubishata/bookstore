@@ -25,11 +25,11 @@ import { PaginationParamsDto } from './dto/pagination-params.dto';
 import { Filter } from './pagination/filter';
 import { createPaginationResponse } from './pagination/pagination';
 import { BookPurchasedEvent } from './events/book-purchased.event';
-import { SSEService } from '@/sse/sse.service';
-import { HasRoles } from '@/auth/guard/has-roles.decorator';
-import { Role } from '@/auth/enum/role.enum';
-import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
-import { RolesGuard } from '@/auth/guard/roles.guard';
+import { SSEService } from '../sse/sse.service';
+import { HasRoles } from '../auth/guard/has-roles.decorator';
+import { Role } from '../auth/enum/role.enum';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
 
 @Controller('books')
 export class BooksController {

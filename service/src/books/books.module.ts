@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksService } from './books.service';
 import { BooksController } from './books.controller';
 import { Book } from './entities/book.entity';
-import { SSEModule } from '@/sse/sse.module';
+import { SSEModule } from '../sse/sse.module';
 
 @Module({
   imports: [
